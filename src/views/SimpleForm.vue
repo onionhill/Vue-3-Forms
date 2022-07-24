@@ -1,7 +1,7 @@
 <template>
   <div>
     <h1>Create an event</h1>
-    <form>
+    <form @submit.prevent="sendForm">
       <BaseSelect
         :options="categories"
         v-model="event.category"
@@ -32,42 +32,27 @@
 
       <h3>Are pets allowed?</h3>
       <div>
-        <input
-            type="radio"
-            v-model="event.pets"
-            :value="1"
-            name="pets"
-          />
-        <label>Yes</label>
-      </div>
-
-      <div>
-        <input
-          type="radio"
+        <BaseRadioGroup
           v-model="event.pets"
-          :value="0"
           name="pets"
+          :options="petOptions"
+
         />
-        <label>No</label>
       </div>
 
       <h3>Extras</h3>
       <div>
-        <input
-          type="checkbox"
+        <BaseCheckbox
           v-model="event.extras.catering"
-          class="field"
+          label="Catering"
         />
-        <label>Catering</label>
       </div>
 
       <div>
-        <input
-          type="checkbox"
+          <BaseCheckbox
           v-model="event.extras.music"
-          class="field"
+          label="Live music"
         />
-        <label>Live music</label>
       </div>
 
       <button type="submit">Submit</button>
@@ -78,30 +63,52 @@
 </template>
 
 <script>
+/* eslint-disable */
+
+import BaseRadio from '../components/BaseRadio.vue'
+import BaseRadioGroup from '../components/BaseRadioGroup.vue';
+import axios from 'axios';
+
 export default {
-  data () {
-    return {
-      categories: [
-        'sustainability',
-        'nature',
-        'animal welfare',
-        'housing',
-        'education',
-        'food',
-        'community'
-      ],
-      event: {
-        category: '',
-        title: '',
-        description: '',
-        location: '',
-        pets: 1,
-        extras: {
-          catering: false,
-          music: false
-        }
+    data() {
+        return {
+            categories: [
+                "sustainability",
+                "nature",
+                "animal welfare",
+                "housing",
+                "education",
+                "food",
+                "community"
+            ],
+            event: {
+                category: "",
+                title: "",
+                description: "",
+                location: "",
+                pets: 1,
+                extras: {
+                    catering: false,
+                    music: false
+                }
+            },
+            petOptions: [
+              {label: 'Yes', value: 1},
+              {label: 'No', value: 0}
+            ]
+        };
+    },
+    components: { BaseRadio, BaseRadioGroup },
+    methods: {
+      sendForm(){
+        axios.post('https://my-json-server.typicode.com/Code-Pop/Vue-3-Forms/events', this.event)
+        .then( (response) => {
+          console.log(response)
+        })
+        .catch( (err) => {
+          console.log(err)
+        })
       }
     }
-  }
 }
 </script>
