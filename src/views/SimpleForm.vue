@@ -14,31 +14,23 @@
       </select>
 
       <h3>Name & describe your event</h3>
-
-      <label>Title</label>
-      <input
+      <BaseInput
         v-model="event.title"
+        label="Title"
         type="text"
-        placeholder="Title"
-        class="field"
-      >
+      />
 
-      <label>Description</label>
-      <input
+       <BaseInput
         v-model="event.description"
+        label="Description"
         type="text"
-        placeholder="Description"
-        class="field"
       />
 
       <h3>Where is your event?</h3>
-
-      <label>Location</label>
-      <input
+      <BaseInput
         v-model="event.location"
+        label="Location"
         type="text"
-        placeholder="Location"
-        class="field"
       />
 
       <h3>Are pets allowed?</h3>
@@ -85,32 +77,34 @@
     </form>
   </div>
 </template>
-
 <script>
+/* eslint-disable */
+import BaseInput from '../components/BaseInput.vue'
 export default {
-  data () {
+  data() {
     return {
-      categories: [
-        'sustainability',
-        'nature',
-        'animal welfare',
-        'housing',
-        'education',
-        'food',
-        'community'
-      ],
-      event: {
-        category: '',
-        title: '',
-        description: '',
-        location: '',
-        pets: 1,
-        extras: {
-          catering: false,
-          music: false
-        }
-      }
-    }
-  }
+          categories: [
+              "sustainability",
+              "nature",
+              "animal welfare",
+              "housing",
+              "education",
+              "food",
+              "community"
+          ],
+          event: {
+              category: "",
+              title: "",
+              description: "",
+              location: "",
+              pets: 1,
+              extras: {
+                  catering: false,
+                  music: false
+              }
+          }
+      };
+  },
+  components: { BaseInput }
 }
 </script>
